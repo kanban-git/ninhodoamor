@@ -567,15 +567,25 @@ const AchievementsScreen = ({ onClose }: { onClose: () => void }) => {
           <p className="text-gift-muted text-[11px]">Toque para virar o card</p>
           <div className="grid grid-cols-3 gap-3">
             {achievements.unlocked.map((a, i) => (
-              <AchievementFlipCard
+              <AchievementCard
                 key={i}
                 achievement={a}
-                couplePhoto={GIFT_DATA.song.coverUrl}
                 index={i}
+                onClick={() => setSelectedIdx(i)}
               />
             ))}
           </div>
         </div>
+
+        <AnimatePresence>
+          {selectedIdx !== null && (
+            <AchievementModal
+              achievement={achievements.unlocked[selectedIdx]}
+              couplePhoto={GIFT_DATA.song.coverUrl}
+              onClose={() => setSelectedIdx(null)}
+            />
+          )}
+        </AnimatePresence>
 
         {/* Upcoming */}
         <div className="space-y-3">
