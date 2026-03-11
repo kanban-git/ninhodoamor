@@ -569,18 +569,25 @@ const Presente = () => {
           transition={{ delay: 0.3, duration: 0.5 }}
           className="max-w-md mx-auto pb-20"
         >
-          {/* Inline top bar — not sticky */}
-          <div className="flex items-center justify-between h-12 px-4">
-            <button className="text-gift-muted">
-              <ChevronDown className="w-6 h-6" />
-            </button>
-            <h1 className="text-gift-foreground font-bold text-sm">{GIFT_DATA.title}</h1>
-            <button className="text-gift-muted">
-              <MoreHorizontal className="w-6 h-6" />
-            </button>
+          {/* Blue gradient background behind header + player */}
+          <div className="relative">
+            <div className="absolute inset-0 bg-gradient-to-b from-sky-700/80 via-sky-900/40 to-transparent h-[650px] pointer-events-none" />
+
+            <div className="relative z-10">
+              {/* Inline top bar */}
+              <div className="flex items-center justify-between h-12 px-4">
+                <button className="text-gift-foreground/70">
+                  <ChevronDown className="w-6 h-6" />
+                </button>
+                <h1 className="text-gift-foreground font-bold text-sm">{GIFT_DATA.title}</h1>
+                <button className="text-gift-foreground/70">
+                  <MoreHorizontal className="w-6 h-6" />
+                </button>
+              </div>
+            </div>
           </div>
 
-          <div className="space-y-8">
+          <div className="space-y-8 relative z-10">
             <MusicSection />
             <CoupleSection />
             <MessageSection />
