@@ -43,12 +43,15 @@ const GIFT_DATA = {
   ],
   achievements: {
     unlocked: [
-      { icon: "🏆", label: "1000 dias de amor", description: "Vocês completaram 1000 dias juntos como casal.", color: "border-yellow-500/60" },
-      { icon: "🎆", label: "Primeiro aniversário", description: "1 ano juntos como casal.", color: "border-pink-500/60" },
-      { icon: "🔥", label: "500 dias juntos", description: "Meio milhar de dias de puro amor.", color: "border-purple-500/60" },
-      { icon: "💎", label: "Três anos de amor", description: "Três anos de história, crescimento e amor.", color: "border-violet-500/60" },
-      { icon: "❤️", label: "Bodas de papel", description: "O primeiro marco do casamento.", color: "border-red-500/60" },
-      { icon: "♾️", label: "Para sempre", description: "O amor que transcende o tempo.", color: "border-blue-500/60" },
+      { icon: "🏆", label: "1000 Dias de Amor", description: "Vocês completaram 1000 dias juntos como casal.", color: "border-yellow-500/60", rarity: "LENDÁRIO" },
+      { icon: "🎆", label: "Primeiro Aniversário", description: "1 ano juntos como casal.", color: "border-purple-500/60", rarity: "ÉPICO" },
+      { icon: "🔥", label: "500 Dias Juntos", description: "Meio milhar de dias de puro amor.", color: "border-purple-500/60", rarity: "ÉPICO" },
+      { icon: "💎", label: "Bodas de Papel", description: "O primeiro marco do casamento.", color: "border-violet-500/60", rarity: "RARO" },
+      { icon: "⭐", label: "Três Anos de Amor", description: "Três anos de história, crescimento e amor.", color: "border-cyan-500/60", rarity: "ÉPICO" },
+      { icon: "♾️", label: "Para Sempre", description: "O amor que transcende o tempo.", color: "border-blue-500/60", rarity: "LENDÁRIO" },
+      { icon: "🎯", label: "100 Dias de Amor", description: "Os primeiros 100 dias juntos.", color: "border-green-500/60", rarity: "COMUM" },
+      { icon: "⭐", label: "Meio Ano de Amor", description: "6 meses de puro carinho.", color: "border-cyan-500/60", rarity: "RARO" },
+      { icon: "📸", label: "Fotógrafo do Casal", description: "Registraram muitos momentos juntos.", color: "border-blue-500/60", rarity: "RARO" },
     ],
     upcoming: [
       { icon: "📸", label: "Álbum do casal", progress: 75 },
@@ -420,11 +423,91 @@ const AchievementsSummary = ({ onOpen }: { onOpen: () => void }) => {
   );
 };
 
+// ─── ACHIEVEMENT FLIP CARD ───
+const AchievementFlipCard = ({ achievement, couplePhoto, index }: { 
+  achievement: typeof GIFT_DATA.achievements.unlocked[0]; 
+  couplePhoto: string;
+  index: number;
+}) => {
+  const [flipped, setFlipped] = useState(false);
+
+  return (
+    <motion.button
+      initial={{ opacity: 0, scale: 0.8 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ delay: index * 0.06 }}
+      whileTap={{ scale: 0.95 }}
+      onClick={() => setFlipped(!flipped)}
+      className="text-left w-full"
+      style={{ perspective: "800px" }}
+    >
+      <div
+        className="relative w-full aspect-[3/4] transition-transform duration-700"
+        style={{
+          transformStyle: "preserve-3d",
+          transform: flipped ? "rotateY(180deg)" : "rotateY(0deg)",
+        }}
+      >
+        {/* BACK (default — shows icon) */}
+        <div
+          className="absolute inset-0 rounded-xl border-2 bg-gift-card overflow-hidden flex flex-col items-center justify-center gap-2"
+          style={{
+            backfaceVisibility: "hidden",
+            WebkitBackfaceVisibility: "hidden",
+          }}
+        >
+          {/* Subtle grid pattern */}
+          <div className="absolute inset-0 opacity-10" style={{
+            backgroundImage: "linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)",
+            backgroundSize: "20px 20px"
+          }} />
+          <span className="text-3xl relative z-10">{achievement.icon}</span>
+          <p className="text-[10px] text-gift-foreground font-semibold leading-tight text-center px-2 relative z-10">
+            {achievement.label}
+          </p>
+        </div>
+
+        {/* FRONT (flipped — shows couple photo + details) */}
+        <div
+          className={`absolute inset-0 rounded-xl border-2 ${achievement.color} bg-gift-card overflow-hidden flex flex-col`}
+          style={{
+            backfaceVisibility: "hidden",
+            WebkitBackfaceVisibility: "hidden",
+            transform: "rotateY(180deg)",
+          }}
+        >
+          {/* Header */}
+          <div className="flex items-center justify-between px-3 pt-2 pb-1">
+            <span className="text-[9px] text-gift-muted font-bold uppercase tracking-wider">LOVEPANDA</span>
+            <span className="text-gift-muted text-[10px]">★★★</span>
+          </div>
+          {/* Photo */}
+          <div className="mx-2 rounded-lg overflow-hidden flex-1 relative">
+            <img src={couplePhoto} alt="Casal" className="w-full h-full object-cover" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+            <div className="absolute bottom-2 left-2 right-2 flex items-center gap-2">
+              <span className="text-lg">{achievement.icon}</span>
+              <div>
+                <p className="text-gift-foreground text-xs font-bold leading-tight">{achievement.label}</p>
+                <p className="text-gift-foreground/60 text-[9px]">{achievement.description}</p>
+              </div>
+            </div>
+          </div>
+          {/* Rarity */}
+          <div className="flex items-center justify-between px-3 py-2">
+            <span className="text-[9px] font-bold uppercase tracking-wider text-purple-400">{achievement.rarity}</span>
+            <span className="text-gift-muted text-[10px]">●●●</span>
+          </div>
+        </div>
+      </div>
+    </motion.button>
+  );
+};
+
 // ─── ACHIEVEMENTS FULL SCREEN ───
 const AchievementsScreen = ({ onClose }: { onClose: () => void }) => {
   const { achievements } = GIFT_DATA;
   const progressPercent = Math.round((achievements.completed / achievements.total) * 100);
-  const [selectedAchievement, setSelectedAchievement] = useState<number | null>(null);
 
   return (
     <motion.div
@@ -444,62 +527,53 @@ const AchievementsScreen = ({ onClose }: { onClose: () => void }) => {
       </header>
 
       <div className="max-w-md mx-auto px-4 py-6 space-y-6">
-        <div className="text-center space-y-3">
-          <div className="inline-flex items-center gap-2 bg-gift-accent/15 px-4 py-2 rounded-full">
-            <Trophy className="w-4 h-4 text-gift-accent" />
+        {/* Progress */}
+        <div className="space-y-2">
+          <div className="flex items-center justify-between">
             <span className="text-gift-foreground font-bold text-sm">{achievements.completed}/{achievements.total}</span>
-            <span className="text-gift-muted text-xs">• {progressPercent}%</span>
+            <span className="text-gift-foreground font-bold text-sm">{progressPercent}%</span>
           </div>
-          <Progress value={progressPercent} className="h-2.5 bg-gift-border [&>div]:bg-gift-accent rounded-full" />
+          <Progress value={progressPercent} className="h-2 bg-gift-border [&>div]:bg-blue-500 rounded-full" />
         </div>
 
+        {/* Ranking card */}
+        <div className="rounded-2xl overflow-hidden bg-gradient-to-br from-purple-600/40 via-violet-700/30 to-purple-900/50 border border-purple-500/20 p-6 text-center space-y-2">
+          <span className="inline-block bg-purple-500/30 text-purple-300 text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full">
+            Ranking
+          </span>
+          <p className="text-5xl font-extrabold text-gift-foreground">#2</p>
+          <p className="text-gift-foreground/80 text-sm font-medium">
+            casal há mais tempo junto em sua cidade
+          </p>
+          <p className="text-gift-muted text-xs">
+            de 45 presentes • {Math.floor((new Date().getTime() - GIFT_DATA.startDate.getTime()) / 86400000)} dias juntos
+          </p>
+          <div className="flex justify-center gap-1 pt-1">
+            <div className="w-2 h-2 rounded-full bg-gift-foreground" />
+            <div className="w-2 h-2 rounded-full bg-gift-muted/40" />
+            <div className="w-2 h-2 rounded-full bg-gift-muted/40" />
+          </div>
+        </div>
+
+        {/* Unlocked badges */}
         <div className="space-y-3">
-          <h4 className="text-gift-muted text-xs font-bold uppercase tracking-wider flex items-center gap-2">
-            <Sparkles className="w-3.5 h-3.5 text-gift-accent" /> Desbloqueadas
+          <h4 className="text-gift-muted text-xs font-bold uppercase tracking-wider">
+            Desbloqueadas ({achievements.unlocked.length})
           </h4>
+          <p className="text-gift-muted text-[11px]">Toque para virar o card</p>
           <div className="grid grid-cols-3 gap-3">
             {achievements.unlocked.map((a, i) => (
-              <motion.button
+              <AchievementFlipCard
                 key={i}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: i * 0.06 }}
-                whileTap={{ scale: 0.92 }}
-                onClick={() => setSelectedAchievement(selectedAchievement === i ? null : i)}
-                className="text-left"
-              >
-                <div className={`bg-gift-card rounded-xl border-2 transition-colors p-4 text-center space-y-2 ${
-                  selectedAchievement === i ? "border-gift-accent/50 bg-gift-accent/10" : a.color
-                }`}>
-                  <span className="text-3xl block">{a.icon}</span>
-                  <p className="text-[11px] text-gift-foreground font-medium leading-tight">{a.label}</p>
-                </div>
-              </motion.button>
+                achievement={a}
+                couplePhoto={GIFT_DATA.song.coverUrl}
+                index={i}
+              />
             ))}
           </div>
         </div>
 
-        <AnimatePresence>
-          {selectedAchievement !== null && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              className="overflow-hidden"
-            >
-              <div className="bg-gift-card rounded-xl border border-gift-accent/20 p-5 text-center space-y-2">
-                <span className="text-4xl">{achievements.unlocked[selectedAchievement].icon}</span>
-                <h4 className="font-bold text-base text-gift-foreground">
-                  {achievements.unlocked[selectedAchievement].label}
-                </h4>
-                <p className="text-gift-muted text-sm">
-                  {achievements.unlocked[selectedAchievement].description}
-                </p>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
+        {/* Upcoming */}
         <div className="space-y-3">
           <h4 className="text-gift-muted text-xs font-bold uppercase tracking-wider flex items-center gap-2">
             <Lock className="w-3.5 h-3.5" /> Quase lá
@@ -521,8 +595,6 @@ const AchievementsScreen = ({ onClose }: { onClose: () => void }) => {
     </motion.div>
   );
 };
-
-// ─── RETROSPECTIVE CTA ───
 const RetrospectiveSection = () => (
   <motion.section {...fadeIn} className="px-4">
     <div className="relative rounded-2xl overflow-hidden bg-gift-bg border border-gift-border min-h-[400px] flex flex-col">
