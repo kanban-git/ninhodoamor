@@ -525,22 +525,31 @@ const AchievementsScreen = ({ onClose }: { onClose: () => void }) => {
 // ─── RETROSPECTIVE CTA ───
 const RetrospectiveSection = () => (
   <motion.section {...fadeIn} className="px-4">
-    <div className="relative rounded-2xl overflow-hidden bg-gift-card border border-gift-border">
-      {/* Abstract decorative shapes */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-8 right-4 w-40 h-20 bg-gradient-to-r from-pink-500/40 to-red-500/30 rounded-full blur-xl rotate-12" />
-        <div className="absolute bottom-16 left-4 w-32 h-32 bg-gradient-to-br from-rose-500/30 to-pink-600/20 rounded-full blur-lg" />
-        <div className="absolute bottom-4 right-8 w-24 h-24 bg-gradient-to-t from-red-500/30 to-pink-500/20 rounded-full blur-lg rotate-45" />
-      </div>
-      
-      <div className="relative z-10 p-8 py-16 text-center space-y-4">
-        <h3 className="font-display text-3xl font-bold text-gift-foreground leading-tight">
+    <div className="relative rounded-2xl overflow-hidden bg-gift-bg border border-gift-border min-h-[380px] flex flex-col items-center justify-center">
+      {/* Top ribbon shapes */}
+      <div className="absolute top-0 left-4 w-28 h-14 bg-gradient-to-r from-pink-600 via-rose-500 to-red-600 rounded-full blur-sm opacity-80 rotate-[-15deg] translate-y-[-20%]" />
+      <div className="absolute top-4 right-0 w-36 h-10 bg-gradient-to-l from-pink-500 via-red-500 to-rose-600 rounded-full blur-sm opacity-70 rotate-[20deg] translate-x-[10%]" />
+      <div className="absolute top-10 right-12 w-20 h-8 bg-gradient-to-r from-red-600 to-pink-600 rounded-full blur-[2px] opacity-60 rotate-[-30deg]" />
+
+      {/* Bottom ribbon shapes */}
+      <div className="absolute bottom-12 left-[-10%] w-48 h-16 bg-gradient-to-r from-rose-600 via-pink-500 to-red-500 rounded-full blur-sm opacity-80 rotate-[10deg]" />
+      <div className="absolute bottom-20 right-[-5%] w-44 h-14 bg-gradient-to-l from-pink-600 via-rose-500 to-red-600 rounded-full blur-sm opacity-75 rotate-[-15deg]" />
+      <div className="absolute bottom-6 left-[20%] w-32 h-12 bg-gradient-to-r from-red-500 to-pink-500 rounded-full blur-[2px] opacity-70 rotate-[25deg]" />
+      <div className="absolute bottom-2 right-[15%] w-24 h-10 bg-gradient-to-l from-rose-500 to-red-600 rounded-full blur-sm opacity-60 rotate-[-20deg]" />
+
+      {/* Content */}
+      <div className="relative z-10 text-center space-y-3 px-8">
+        <h3 className="text-3xl font-extrabold text-gift-foreground leading-tight tracking-tight">
           Sua Retrospectiva
         </h3>
-        <p className="text-gift-muted text-sm">
+        <p className="text-gift-muted text-base">
           Explore o seu tempo de casal
         </p>
-        <Button className="bg-sky-400 hover:bg-sky-400/90 text-gift-bg rounded-full px-10 py-5 text-sm font-bold shadow-lg mt-4">
+      </div>
+
+      {/* Button at bottom */}
+      <div className="relative z-10 mt-auto mb-8">
+        <Button className="bg-sky-400 hover:bg-sky-400/90 text-gift-bg rounded-full px-12 py-5 text-base font-bold shadow-lg">
           Vamos lá
         </Button>
       </div>
