@@ -43,12 +43,15 @@ const GIFT_DATA = {
   ],
   achievements: {
     unlocked: [
-      { icon: "🏆", label: "1000 dias de amor", description: "Vocês completaram 1000 dias juntos como casal.", color: "border-yellow-500/60" },
-      { icon: "🎆", label: "Primeiro aniversário", description: "1 ano juntos como casal.", color: "border-pink-500/60" },
-      { icon: "🔥", label: "500 dias juntos", description: "Meio milhar de dias de puro amor.", color: "border-purple-500/60" },
-      { icon: "💎", label: "Três anos de amor", description: "Três anos de história, crescimento e amor.", color: "border-violet-500/60" },
-      { icon: "❤️", label: "Bodas de papel", description: "O primeiro marco do casamento.", color: "border-red-500/60" },
-      { icon: "♾️", label: "Para sempre", description: "O amor que transcende o tempo.", color: "border-blue-500/60" },
+      { icon: "🏆", label: "1000 Dias de Amor", description: "Vocês completaram 1000 dias juntos como casal.", color: "border-yellow-500/60", rarity: "LENDÁRIO" },
+      { icon: "🎆", label: "Primeiro Aniversário", description: "1 ano juntos como casal.", color: "border-purple-500/60", rarity: "ÉPICO" },
+      { icon: "🔥", label: "500 Dias Juntos", description: "Meio milhar de dias de puro amor.", color: "border-purple-500/60", rarity: "ÉPICO" },
+      { icon: "💎", label: "Bodas de Papel", description: "O primeiro marco do casamento.", color: "border-violet-500/60", rarity: "RARO" },
+      { icon: "⭐", label: "Três Anos de Amor", description: "Três anos de história, crescimento e amor.", color: "border-cyan-500/60", rarity: "ÉPICO" },
+      { icon: "♾️", label: "Para Sempre", description: "O amor que transcende o tempo.", color: "border-blue-500/60", rarity: "LENDÁRIO" },
+      { icon: "🎯", label: "100 Dias de Amor", description: "Os primeiros 100 dias juntos.", color: "border-green-500/60", rarity: "COMUM" },
+      { icon: "⭐", label: "Meio Ano de Amor", description: "6 meses de puro carinho.", color: "border-cyan-500/60", rarity: "RARO" },
+      { icon: "📸", label: "Fotógrafo do Casal", description: "Registraram muitos momentos juntos.", color: "border-blue-500/60", rarity: "RARO" },
     ],
     upcoming: [
       { icon: "📸", label: "Álbum do casal", progress: 75 },
