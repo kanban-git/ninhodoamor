@@ -32,7 +32,9 @@ const COUPLE = {
 const TOTAL_DAYS = Math.floor((new Date().getTime() - COUPLE.startDate.getTime()) / 86400000);
 const TOTAL_HOURS = TOTAL_DAYS * 24;
 
-// ─── ANIMATED COUNTER ───
+// Pre-generated stars for moon slide (no hooks needed)
+const MOON_STARS = Array.from({ length: 40 }, () => ({ x: Math.random() * 100, y: Math.random() * 100, size: Math.random() * 2 + 0.5, delay: Math.random() * 3 }));
+
 const AnimatedCounter = ({ target, duration = 2000 }: { target: number; duration?: number }) => {
   const [count, setCount] = useState(0);
   useEffect(() => {
