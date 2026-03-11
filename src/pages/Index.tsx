@@ -232,7 +232,7 @@ const ProductDemo = () => (
           <p className="text-muted-foreground text-lg leading-relaxed">
             Reviva cada momento do relacionamento em uma retrospectiva emocionante.
           </p>
-          <Button className="bg-green-cta hover:bg-green-cta/90 text-green-cta-foreground rounded-full px-8 py-5">
+          <Button onClick={() => window.location.href = '/criar'} className="bg-green-cta hover:bg-green-cta/90 text-green-cta-foreground rounded-full px-8 py-5">
             Criar meu presente →
           </Button>
         </motion.div>
