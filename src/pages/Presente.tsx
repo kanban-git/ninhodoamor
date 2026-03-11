@@ -198,7 +198,7 @@ function getDominantColor(src: string): Promise<[number, number, number]> {
 }
 
 // ─── MUSIC SECTION (Full Spotify player) ───
-const MusicSection = () => {
+const MusicSection = ({ onColorChange }: { onColorChange?: (rgb: [number, number, number]) => void }) => {
   const [playing, setPlaying] = useState(false);
   const [photoIdx, setPhotoIdx] = useState(0);
   const [progress, setProgress] = useState(0);
