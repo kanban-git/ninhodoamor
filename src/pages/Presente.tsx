@@ -423,91 +423,95 @@ const AchievementsSummary = ({ onOpen }: { onOpen: () => void }) => {
   );
 };
 
-// ─── ACHIEVEMENT FLIP CARD ───
-const AchievementFlipCard = ({ achievement, couplePhoto, index }: { 
+// ─── ACHIEVEMENT CARD (just the back/icon) ───
+const AchievementCard = ({ achievement, index, onClick }: { 
   achievement: typeof GIFT_DATA.achievements.unlocked[0]; 
-  couplePhoto: string;
   index: number;
-}) => {
-  const [flipped, setFlipped] = useState(false);
+  onClick: () => void;
+}) => (
+  <motion.button
+    initial={{ opacity: 0, scale: 0.8 }}
+    animate={{ opacity: 1, scale: 1 }}
+    transition={{ delay: index * 0.06 }}
+    whileTap={{ scale: 0.95 }}
+    onClick={onClick}
+    className="text-left w-full"
+  >
+    <div className={`w-full aspect-[3/4] rounded-xl border-2 ${achievement.color} bg-gift-card overflow-hidden flex flex-col items-center justify-center gap-2 relative`}>
+      <div className="absolute inset-0 opacity-10" style={{
+        backgroundImage: "linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)",
+        backgroundSize: "20px 20px"
+      }} />
+      <span className="text-3xl relative z-10">{achievement.icon}</span>
+      <p className="text-[10px] text-gift-foreground font-semibold leading-tight text-center px-2 relative z-10">
+        {achievement.label}
+      </p>
+    </div>
+  </motion.button>
+);
 
-  return (
-    <motion.button
-      initial={{ opacity: 0, scale: 0.8 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ delay: index * 0.06 }}
-      whileTap={{ scale: 0.95 }}
-      onClick={() => setFlipped(!flipped)}
-      className="text-left w-full"
-      style={{ perspective: "800px" }}
+// ─── ACHIEVEMENT DETAIL MODAL ───
+const AchievementModal = ({ achievement, couplePhoto, onClose }: {
+  achievement: typeof GIFT_DATA.achievements.unlocked[0];
+  couplePhoto: string;
+  onClose: () => void;
+}) => (
+  <motion.div
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    exit={{ opacity: 0 }}
+    className="fixed inset-0 z-[60] bg-black/80 backdrop-blur-sm flex flex-col items-center justify-center p-6"
+    onClick={onClose}
+  >
+    <motion.div
+      initial={{ scale: 0.8, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1 }}
+      exit={{ scale: 0.8, opacity: 0 }}
+      transition={{ type: "spring", damping: 22 }}
+      onClick={(e) => e.stopPropagation()}
+      className="w-full max-w-xs space-y-4"
     >
-      <div
-        className="relative w-full aspect-[3/4] transition-transform duration-700"
-        style={{
-          transformStyle: "preserve-3d",
-          transform: flipped ? "rotateY(180deg)" : "rotateY(0deg)",
-        }}
-      >
-        {/* BACK (default — shows icon) */}
-        <div
-          className="absolute inset-0 rounded-xl border-2 bg-gift-card overflow-hidden flex flex-col items-center justify-center gap-2"
-          style={{
-            backfaceVisibility: "hidden",
-            WebkitBackfaceVisibility: "hidden",
-          }}
-        >
-          {/* Subtle grid pattern */}
-          <div className="absolute inset-0 opacity-10" style={{
-            backgroundImage: "linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)",
-            backgroundSize: "20px 20px"
-          }} />
-          <span className="text-3xl relative z-10">{achievement.icon}</span>
-          <p className="text-[10px] text-gift-foreground font-semibold leading-tight text-center px-2 relative z-10">
-            {achievement.label}
-          </p>
-        </div>
+      {/* Badge label */}
+      <div className="text-center">
+        <span className="inline-block bg-purple-500/30 text-purple-300 text-[11px] font-bold uppercase tracking-widest px-4 py-1.5 rounded-full">
+          Desbloqueada
+        </span>
+      </div>
 
-        {/* FRONT (flipped — shows couple photo + details) */}
-        <div
-          className={`absolute inset-0 rounded-xl border-2 ${achievement.color} bg-gift-card overflow-hidden flex flex-col`}
-          style={{
-            backfaceVisibility: "hidden",
-            WebkitBackfaceVisibility: "hidden",
-            transform: "rotateY(180deg)",
-          }}
-        >
-          {/* Header */}
-          <div className="flex items-center justify-between px-3 pt-2 pb-1">
-            <span className="text-[9px] text-gift-muted font-bold uppercase tracking-wider">LOVEPANDA</span>
-            <span className="text-gift-muted text-[10px]">★★★</span>
-          </div>
-          {/* Photo */}
-          <div className="mx-2 rounded-lg overflow-hidden flex-1 relative">
-            <img src={couplePhoto} alt="Casal" className="w-full h-full object-cover" />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
-            <div className="absolute bottom-2 left-2 right-2 flex items-center gap-2">
-              <span className="text-lg">{achievement.icon}</span>
-              <div>
-                <p className="text-gift-foreground text-xs font-bold leading-tight">{achievement.label}</p>
-                <p className="text-gift-foreground/60 text-[9px]">{achievement.description}</p>
-              </div>
+      {/* Card */}
+      <div className={`rounded-2xl border-2 ${achievement.color} bg-gift-card overflow-hidden shadow-2xl shadow-purple-500/10`}>
+        <div className="flex items-center justify-between px-4 pt-3 pb-1">
+          <span className="text-[10px] text-gift-muted font-bold uppercase tracking-wider">LOVEPANDA</span>
+          <span className="text-gift-muted text-xs">★★★</span>
+        </div>
+        <div className="mx-3 rounded-xl overflow-hidden relative aspect-[4/3]">
+          <img src={couplePhoto} alt="Casal" className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+          <div className="absolute bottom-3 left-3 right-3 flex items-center gap-2">
+            <span className="text-2xl">{achievement.icon}</span>
+            <div>
+              <p className="text-gift-foreground text-sm font-bold leading-tight">{achievement.label}</p>
+              <p className="text-gift-foreground/60 text-xs">{achievement.description}</p>
             </div>
           </div>
-          {/* Rarity */}
-          <div className="flex items-center justify-between px-3 py-2">
-            <span className="text-[9px] font-bold uppercase tracking-wider text-purple-400">{achievement.rarity}</span>
-            <span className="text-gift-muted text-[10px]">●●●</span>
-          </div>
+        </div>
+        <div className="flex items-center justify-between px-4 py-3">
+          <span className="text-[10px] font-bold uppercase tracking-wider text-purple-400">{achievement.rarity}</span>
+          <span className="text-gift-muted text-xs">●●●</span>
         </div>
       </div>
-    </motion.button>
-  );
-};
+
+      {/* Hint */}
+      <p className="text-center text-gift-muted text-xs">Toque para virar o card</p>
+    </motion.div>
+  </motion.div>
+);
 
 // ─── ACHIEVEMENTS FULL SCREEN ───
 const AchievementsScreen = ({ onClose }: { onClose: () => void }) => {
   const { achievements } = GIFT_DATA;
   const progressPercent = Math.round((achievements.completed / achievements.total) * 100);
+  const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
 
   return (
     <motion.div
@@ -563,15 +567,25 @@ const AchievementsScreen = ({ onClose }: { onClose: () => void }) => {
           <p className="text-gift-muted text-[11px]">Toque para virar o card</p>
           <div className="grid grid-cols-3 gap-3">
             {achievements.unlocked.map((a, i) => (
-              <AchievementFlipCard
+              <AchievementCard
                 key={i}
                 achievement={a}
-                couplePhoto={GIFT_DATA.song.coverUrl}
                 index={i}
+                onClick={() => setSelectedIdx(i)}
               />
             ))}
           </div>
         </div>
+
+        <AnimatePresence>
+          {selectedIdx !== null && (
+            <AchievementModal
+              achievement={achievements.unlocked[selectedIdx]}
+              couplePhoto={GIFT_DATA.song.coverUrl}
+              onClose={() => setSelectedIdx(null)}
+            />
+          )}
+        </AnimatePresence>
 
         {/* Upcoming */}
         <div className="space-y-3">
