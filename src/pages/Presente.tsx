@@ -450,62 +450,102 @@ const AchievementCard = ({ achievement, index, onClick }: {
   </motion.button>
 );
 
-// ─── ACHIEVEMENT DETAIL MODAL ───
+// ─── ACHIEVEMENT DETAIL MODAL (with flip) ───
 const AchievementModal = ({ achievement, couplePhoto, onClose }: {
   achievement: typeof GIFT_DATA.achievements.unlocked[0];
   couplePhoto: string;
   onClose: () => void;
-}) => (
-  <motion.div
-    initial={{ opacity: 0 }}
-    animate={{ opacity: 1 }}
-    exit={{ opacity: 0 }}
-    className="fixed inset-0 z-[60] bg-black/80 backdrop-blur-sm flex flex-col items-center justify-center p-6"
-    onClick={onClose}
-  >
-    <motion.div
-      initial={{ scale: 0.8, opacity: 0 }}
-      animate={{ scale: 1, opacity: 1 }}
-      exit={{ scale: 0.8, opacity: 0 }}
-      transition={{ type: "spring", damping: 22 }}
-      onClick={(e) => e.stopPropagation()}
-      className="w-full max-w-xs space-y-4"
-    >
-      {/* Badge label */}
-      <div className="text-center">
-        <span className="inline-block bg-purple-500/30 text-purple-300 text-[11px] font-bold uppercase tracking-widest px-4 py-1.5 rounded-full">
-          Desbloqueada
-        </span>
-      </div>
+}) => {
+  const [flipped, setFlipped] = useState(false);
 
-      {/* Card */}
-      <div className={`rounded-2xl border-2 ${achievement.color} bg-gift-card overflow-hidden shadow-2xl shadow-purple-500/10`}>
-        <div className="flex items-center justify-between px-4 pt-3 pb-1">
-          <span className="text-[10px] text-gift-muted font-bold uppercase tracking-wider">LOVEPANDA</span>
-          <span className="text-gift-muted text-xs">★★★</span>
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-[60] bg-black/80 backdrop-blur-sm flex flex-col items-center justify-center p-6"
+      onClick={onClose}
+    >
+      <motion.div
+        initial={{ scale: 0.8, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.8, opacity: 0 }}
+        transition={{ type: "spring", damping: 22 }}
+        onClick={(e) => e.stopPropagation()}
+        className="w-full max-w-xs space-y-4"
+      >
+        {/* Badge label */}
+        <div className="text-center">
+          <span className="inline-block bg-purple-500/30 text-purple-300 text-[11px] font-bold uppercase tracking-widest px-4 py-1.5 rounded-full">
+            Desbloqueada
+          </span>
         </div>
-        <div className="mx-3 rounded-xl overflow-hidden relative aspect-[4/3]">
-          <img src={couplePhoto} alt="Casal" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
-          <div className="absolute bottom-3 left-3 right-3 flex items-center gap-2">
-            <span className="text-2xl">{achievement.icon}</span>
-            <div>
-              <p className="text-gift-foreground text-sm font-bold leading-tight">{achievement.label}</p>
-              <p className="text-gift-foreground/60 text-xs">{achievement.description}</p>
+
+        {/* Flip container */}
+        <div
+          className="w-full aspect-[3/4] cursor-pointer"
+          style={{ perspective: "1000px" }}
+          onClick={() => setFlipped(!flipped)}
+        >
+          <div
+            className="relative w-full h-full transition-transform duration-700"
+            style={{
+              transformStyle: "preserve-3d",
+              transform: flipped ? "rotateY(180deg)" : "rotateY(0deg)",
+            }}
+          >
+            {/* BACK SIDE (default - logo) */}
+            <div
+              className={`absolute inset-0 rounded-2xl border-2 ${achievement.color} bg-gift-card overflow-hidden shadow-2xl shadow-purple-500/10 flex flex-col items-center justify-center gap-3`}
+              style={{ backfaceVisibility: "hidden" }}
+            >
+              <div className="absolute inset-0 opacity-10" style={{
+                backgroundImage: "linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)",
+                backgroundSize: "20px 20px"
+              }} />
+              <div className="relative z-10 flex flex-col items-center gap-3">
+                <div className="w-16 h-16 rounded-xl bg-gift-bg/80 border border-gift-border flex items-center justify-center">
+                  <span className="text-3xl">{achievement.icon}</span>
+                </div>
+                <span className="text-[11px] text-gift-muted font-bold uppercase tracking-[0.2em]">NINHO DO AMOR</span>
+                <span className="text-gift-muted text-xs">★★★</span>
+              </div>
+            </div>
+
+            {/* FRONT SIDE (flipped - photo & details) */}
+            <div
+              className={`absolute inset-0 rounded-2xl border-2 ${achievement.color} bg-gift-card overflow-hidden shadow-2xl shadow-purple-500/10 flex flex-col`}
+              style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
+            >
+              <div className="flex items-center justify-between px-4 pt-3 pb-1">
+                <span className="text-[10px] text-gift-muted font-bold uppercase tracking-wider">NINHO DO AMOR</span>
+                <span className="text-gift-muted text-xs">★★★</span>
+              </div>
+              <div className="mx-3 rounded-xl overflow-hidden relative flex-1">
+                <img src={couplePhoto} alt="Casal" className="w-full h-full object-cover" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+                <div className="absolute bottom-3 left-3 right-3 flex items-center gap-2">
+                  <span className="text-2xl">{achievement.icon}</span>
+                  <div>
+                    <p className="text-gift-foreground text-sm font-bold leading-tight">{achievement.label}</p>
+                    <p className="text-gift-foreground/60 text-xs">{achievement.description}</p>
+                  </div>
+                </div>
+              </div>
+              <div className="flex items-center justify-between px-4 py-3">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-purple-400">{achievement.rarity}</span>
+                <span className="text-gift-muted text-xs">●●●</span>
+              </div>
             </div>
           </div>
         </div>
-        <div className="flex items-center justify-between px-4 py-3">
-          <span className="text-[10px] font-bold uppercase tracking-wider text-purple-400">{achievement.rarity}</span>
-          <span className="text-gift-muted text-xs">●●●</span>
-        </div>
-      </div>
 
-      {/* Hint */}
-      <p className="text-center text-gift-muted text-xs">Toque para virar o card</p>
+        {/* Hint */}
+        <p className="text-center text-gift-muted text-xs animate-pulse">Toque para virar o card</p>
+      </motion.div>
     </motion.div>
-  </motion.div>
-);
+  );
+};
 
 // ─── ACHIEVEMENTS FULL SCREEN ───
 const AchievementsScreen = ({ onClose }: { onClose: () => void }) => {
