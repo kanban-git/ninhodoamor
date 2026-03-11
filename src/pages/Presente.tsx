@@ -345,40 +345,49 @@ const CoupleSection = () => {
   ];
 
   return (
-    <motion.section {...fadeIn} className="px-4 space-y-4">
-      {/* Card with photo */}
-      <div className="relative rounded-2xl overflow-hidden">
-        <div className="absolute top-4 left-4 z-10">
+    <motion.section {...fadeIn} className="px-4">
+      <div className="bg-gift-card rounded-2xl border border-gift-border overflow-hidden">
+        {/* Header label */}
+        <div className="px-4 pt-4 pb-2">
           <span className="text-gift-foreground font-bold text-sm">Sobre o casal</span>
         </div>
-        <img src={GIFT_DATA.couplePhoto} alt="Casal" className="w-full h-72 object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-t from-gift-bg via-gift-bg/30 to-transparent" />
-        <div className="absolute bottom-4 left-4 right-4">
+
+        {/* Couple photo */}
+        <div className="px-4">
+          <img
+            src={GIFT_DATA.couplePhoto}
+            alt="Casal"
+            className="w-full h-56 object-cover rounded-xl"
+          />
+        </div>
+
+        {/* Names */}
+        <div className="px-4 pt-4 pb-2">
           <h2 className="font-bold text-xl text-gift-foreground">
             {GIFT_DATA.senderName} e {GIFT_DATA.receiverName}
           </h2>
-          <p className="text-gift-accent text-sm">Juntos desde {GIFT_DATA.startDate.getFullYear()}</p>
+          <p className="text-gift-muted text-sm">Juntos desde {GIFT_DATA.startDate.getFullYear()}</p>
         </div>
-      </div>
 
-      {/* Counter grid */}
-      <div className="grid grid-cols-3 gap-2">
-        {units.map((u, i) => (
-          <motion.div
-            key={u.label}
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: i * 0.05 }}
-          >
-            <div className="bg-gift-card rounded-xl border border-gift-border p-3 text-center">
-              <p className="text-2xl font-bold text-gift-foreground font-sans tabular-nums">
-                {String(u.value).padStart(2, "0")}
-              </p>
-              <p className="text-[11px] text-gift-muted">{u.label}</p>
-            </div>
-          </motion.div>
-        ))}
+        {/* Counter grid */}
+        <div className="grid grid-cols-3 gap-2 px-4 pb-4 pt-2">
+          {units.map((u, i) => (
+            <motion.div
+              key={u.label}
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.05 }}
+            >
+              <div className="bg-gift-bg rounded-xl border border-gift-border p-3 text-center">
+                <p className="text-2xl font-bold text-gift-foreground font-sans tabular-nums">
+                  {String(u.value).padStart(2, "0")}
+                </p>
+                <p className="text-[11px] text-gift-muted">{u.label}</p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
       </div>
     </motion.section>
   );
