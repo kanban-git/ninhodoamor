@@ -569,20 +569,18 @@ const Presente = () => {
           transition={{ delay: 0.3, duration: 0.5 }}
           className="max-w-md mx-auto pb-20"
         >
-          {/* Header */}
-          <header className="sticky top-0 z-40 bg-gift-bg/90 backdrop-blur-xl border-b border-gift-border">
-            <div className="flex items-center justify-between h-12 px-4">
-              <button className="text-gift-muted">
-                <ChevronDown className="w-6 h-6" />
-              </button>
-              <h1 className="text-gift-foreground font-bold text-sm">{GIFT_DATA.title}</h1>
-              <button className="text-gift-muted">
-                <MoreHorizontal className="w-6 h-6" />
-              </button>
-            </div>
-          </header>
+          {/* Inline top bar — not sticky */}
+          <div className="flex items-center justify-between h-12 px-4">
+            <button className="text-gift-muted">
+              <ChevronDown className="w-6 h-6" />
+            </button>
+            <h1 className="text-gift-foreground font-bold text-sm">{GIFT_DATA.title}</h1>
+            <button className="text-gift-muted">
+              <MoreHorizontal className="w-6 h-6" />
+            </button>
+          </div>
 
-          <div className="space-y-8 pt-6">
+          <div className="space-y-8">
             <MusicSection />
             <CoupleSection />
             <MessageSection />
