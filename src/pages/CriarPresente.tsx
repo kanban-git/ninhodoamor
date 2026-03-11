@@ -551,8 +551,7 @@ const StepCheckout = ({ data, onChange }: { data: GiftData; onChange: (d: Partia
       <div className="border-t border-border pt-3 flex justify-between">
         <span className="font-bold text-foreground">Total</span>
         <span className="font-bold text-primary text-lg">
-          R${(data.plan === "forever" ? 29.9 : 19.9) + (data.addWrapped ? 14.9 : 0)},
-          {((data.plan === "forever" ? 29.9 : 19.9) + (data.addWrapped ? 14.9 : 0)) % 1 === 0 ? "00" : ""}
+          R${((data.plan === "forever" ? 29.9 : 19.9) + (data.addWrapped ? 14.9 : 0)).toFixed(2).replace(".", ",")}
         </span>
       </div>
     </div>
