@@ -347,18 +347,16 @@ const CoupleSection = () => {
   return (
     <motion.section {...fadeIn} className="px-4">
       <div className="bg-gift-card rounded-2xl border border-gift-border overflow-hidden">
-        {/* Header label */}
-        <div className="px-4 pt-4 pb-2">
-          <span className="text-gift-foreground font-bold text-sm">Sobre o casal</span>
-        </div>
-
-        {/* Couple photo */}
-        <div className="px-4">
+        {/* Photo full-width with overlaid label */}
+        <div className="relative">
           <img
             src={GIFT_DATA.couplePhoto}
             alt="Casal"
-            className="w-full h-56 object-cover rounded-xl"
+            className="w-full h-72 object-cover"
           />
+          <div className="absolute top-4 left-4">
+            <span className="text-gift-foreground font-bold text-base drop-shadow-lg">Sobre o casal</span>
+          </div>
         </div>
 
         {/* Names */}
@@ -379,7 +377,7 @@ const CoupleSection = () => {
               viewport={{ once: true }}
               transition={{ delay: i * 0.05 }}
             >
-              <div className="bg-gift-bg rounded-xl border border-gift-border p-3 text-center">
+              <div className="bg-gift-bg rounded-xl border border-gift-border p-3 text-center shadow-lg shadow-black/30">
                 <p className="text-2xl font-bold text-gift-foreground font-sans tabular-nums">
                   {String(u.value).padStart(2, "0")}
                 </p>
