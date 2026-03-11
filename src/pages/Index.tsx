@@ -410,7 +410,7 @@ const Pricing = () => (
                   </li>
                 ))}
               </ul>
-              <Button className="w-full bg-green-cta hover:bg-green-cta/90 text-green-cta-foreground rounded-full">
+              <Button onClick={() => window.location.href = '/criar'} className="w-full bg-green-cta hover:bg-green-cta/90 text-green-cta-foreground rounded-full">
                 Criar meu presente
               </Button>
             </CardContent>
