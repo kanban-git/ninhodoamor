@@ -358,6 +358,7 @@ const GallerySection = () => {
           </motion.button>
         ))}
       </div>
+      </div>
 
       <AnimatePresence>
         {selected !== null && (
