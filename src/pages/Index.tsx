@@ -311,7 +311,7 @@ const DemoCTA = () => (
       <motion.div {...fadeInUp} className="space-y-6">
         <BirdMascot className="w-16 h-16 mx-auto" />
         <h2 className="font-display text-3xl md:text-4xl font-bold text-white">Veja um exemplo de presente</h2>
-        <Button className="bg-card text-foreground hover:bg-card/90 rounded-full px-8 py-5 text-base shadow-lg">
+        <Button onClick={() => window.location.href = '/demo'} className="bg-card text-foreground hover:bg-card/90 rounded-full px-8 py-5 text-base shadow-lg">
           Explorar demo
         </Button>
         <p className="text-white/80 text-sm">Sem cadastro necessário</p>
