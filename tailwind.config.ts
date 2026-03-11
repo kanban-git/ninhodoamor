@@ -77,6 +77,13 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        gift: {
+          bg: "hsl(var(--gift-bg))",
+          foreground: "hsl(var(--gift-foreground))",
+          card: "hsl(var(--gift-card))",
+          border: "hsl(var(--gift-border))",
+          muted: "hsl(var(--gift-muted))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
