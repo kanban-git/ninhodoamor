@@ -83,6 +83,7 @@ export default {
           card: "hsl(var(--gift-card))",
           border: "hsl(var(--gift-border))",
           muted: "hsl(var(--gift-muted))",
+          accent: "hsl(var(--gift-accent))",
         },
       },
       borderRadius: {

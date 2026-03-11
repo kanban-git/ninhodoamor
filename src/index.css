@@ -85,13 +85,14 @@
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
-  /* Gift experience page tokens */
+  /* Gift experience page tokens — Spotify style */
   :root {
-    --gift-bg: 270 15% 10%;
-    --gift-foreground: 270 10% 92%;
-    --gift-card: 270 15% 15%;
-    --gift-border: 270 12% 22%;
-    --gift-muted: 270 10% 55%;
+    --gift-bg: 0 0% 7%;
+    --gift-foreground: 0 0% 100%;
+    --gift-card: 0 0% 11%;
+    --gift-border: 0 0% 16%;
+    --gift-muted: 0 0% 55%;
+    --gift-accent: 141 73% 42%;
   }
 }
 
