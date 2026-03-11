@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { Heart, Star, Music, Calendar, Clock, Image, Edit3, Link2, Send, Check, ChevronDown, Instagram, Sparkles, Users, Globe, Palette, BookOpen, Award } from "lucide-react";
+import { useNavigate as useNav } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
