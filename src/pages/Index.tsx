@@ -70,7 +70,7 @@ const Hero = () => (
           <p className="text-lg text-muted-foreground max-w-lg leading-relaxed">
             Crie um presente digital com fotos, música e uma retrospectiva da história do seu relacionamento.
           </p>
-          <Button className="bg-green-cta hover:bg-green-cta/90 text-green-cta-foreground text-base px-8 py-6 rounded-full shadow-lg hover:shadow-xl transition-all">
+          <Button onClick={() => window.location.href = '/criar'} className="bg-green-cta hover:bg-green-cta/90 text-green-cta-foreground text-base px-8 py-6 rounded-full shadow-lg hover:shadow-xl transition-all">
             Criar meu presente →
           </Button>
           <div className="flex items-center gap-3 pt-2">
