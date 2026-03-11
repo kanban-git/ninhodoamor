@@ -536,7 +536,6 @@ const WrappedExperience = () => {
         </motion.div>
       </div>
     ),
-    },
 
     // ───── TELA 4: ESTAÇÃO (INVERNO) ─────
     () => (
