@@ -163,17 +163,85 @@ const EntryScreen = ({ senderName, onEnter }: { senderName: string; onEnter: () 
   </motion.div>
 );
 
+// ─── DEMO PHOTOS for skip navigation ───
+const DEMO_PHOTOS = [
+  GIFT_DATA.song.coverUrl,
+  GIFT_DATA.couplePhoto,
+  ...GIFT_DATA.gallery.map(g => g.url),
+];
+
+// Free demo rock track (royalty-free)
+const DEMO_AUDIO_URL = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3";
+
 // ─── MUSIC SECTION (Full Spotify player) ───
 const MusicSection = () => {
   const [playing, setPlaying] = useState(false);
+  const [photoIdx, setPhotoIdx] = useState(0);
+  const [progress, setProgress] = useState(0);
+  const [elapsed, setElapsed] = useState("0:00");
+  const [remaining, setRemaining] = useState("-0:00");
+  const [audioRef] = useState(() => {
+    const a = new Audio(DEMO_AUDIO_URL);
+    a.preload = "auto";
+    return a;
+  });
   const { song } = GIFT_DATA;
+
+  useEffect(() => {
+    const a = audioRef;
+    const onTimeUpdate = () => {
+      if (a.duration) {
+        setProgress((a.currentTime / a.duration) * 100);
+        const em = Math.floor(a.currentTime / 60);
+        const es = Math.floor(a.currentTime % 60);
+        setElapsed(`${em}:${es.toString().padStart(2, "0")}`);
+        const rem = a.duration - a.currentTime;
+        const rm = Math.floor(rem / 60);
+        const rs = Math.floor(rem % 60);
+        setRemaining(`-${rm}:${rs.toString().padStart(2, "0")}`);
+      }
+    };
+    const onEnded = () => setPlaying(false);
+    a.addEventListener("timeupdate", onTimeUpdate);
+    a.addEventListener("ended", onEnded);
+    return () => {
+      a.removeEventListener("timeupdate", onTimeUpdate);
+      a.removeEventListener("ended", onEnded);
+      a.pause();
+    };
+  }, [audioRef]);
+
+  const togglePlay = () => {
+    if (playing) {
+      audioRef.pause();
+      setPlaying(false);
+    } else {
+      audioRef.play().catch(() => {});
+      setPlaying(true);
+    }
+  };
+
+  const skipPhoto = (dir: 1 | -1) => {
+    setPhotoIdx((prev) => (prev + dir + DEMO_PHOTOS.length) % DEMO_PHOTOS.length);
+  };
 
   return (
     <motion.section {...fadeIn} className="px-4">
       <div className="space-y-5">
-        {/* Large album art */}
+        {/* Large album art / photo carousel */}
         <div className="relative aspect-square rounded-xl overflow-hidden shadow-2xl mx-4">
-          <img src={song.coverUrl} alt="Album cover" className="w-full h-full object-cover" />
+          <AnimatePresence mode="wait">
+            <motion.img
+              key={photoIdx}
+              src={DEMO_PHOTOS[photoIdx]}
+              alt="Album cover"
+              className="w-full h-full object-cover absolute inset-0"
+              initial={{ opacity: 0, scale: 1.05 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.3 }}
+            />
+          </AnimatePresence>
         </div>
 
         {/* Song info row */}
@@ -189,10 +257,10 @@ const MusicSection = () => {
 
         {/* Progress bar */}
         <div className="space-y-1 px-1">
-          <Progress value={song.progress} className="h-1 bg-gift-border [&>div]:bg-gift-foreground rounded-full" />
+          <Progress value={progress} className="h-1 bg-gift-border [&>div]:bg-gift-foreground rounded-full" />
           <div className="flex justify-between text-[11px] text-gift-muted font-medium">
-            <span>{song.elapsed}</span>
-            <span>{song.duration}</span>
+            <span>{elapsed}</span>
+            <span>{remaining}</span>
           </div>
         </div>
 
@@ -201,12 +269,12 @@ const MusicSection = () => {
           <button className="text-gift-muted hover:text-gift-foreground transition-colors">
             <Shuffle className="w-5 h-5" />
           </button>
-          <button className="text-gift-muted hover:text-gift-foreground transition-colors">
+          <button onClick={() => skipPhoto(-1)} className="text-gift-muted hover:text-gift-foreground transition-colors">
             <SkipBack className="w-7 h-7" fill="currentColor" />
           </button>
           <motion.button
             whileTap={{ scale: 0.9 }}
-            onClick={() => setPlaying(!playing)}
+            onClick={togglePlay}
             className="w-16 h-16 rounded-full bg-gift-foreground flex items-center justify-center hover:scale-105 transition-transform shadow-xl"
           >
             {playing ? (
@@ -215,7 +283,7 @@ const MusicSection = () => {
               <Play className="w-7 h-7 text-gift-bg ml-1" fill="hsl(var(--gift-bg))" />
             )}
           </motion.button>
-          <button className="text-gift-muted hover:text-gift-foreground transition-colors">
+          <button onClick={() => skipPhoto(1)} className="text-gift-muted hover:text-gift-foreground transition-colors">
             <SkipForward className="w-7 h-7" fill="currentColor" />
           </button>
           <button className="text-gift-muted hover:text-gift-foreground transition-colors">
