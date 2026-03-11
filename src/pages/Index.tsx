@@ -384,7 +384,7 @@ const Pricing = () => (
                   </li>
                 ))}
               </ul>
-              <Button variant="outline" className="w-full rounded-full border-primary text-primary hover:bg-primary hover:text-primary-foreground">
+              <Button onClick={() => window.location.href = '/criar'} variant="outline" className="w-full rounded-full border-primary text-primary hover:bg-primary hover:text-primary-foreground">
                 Criar meu presente
               </Button>
             </CardContent>
