@@ -511,6 +511,7 @@ const AchievementModal = ({ achievement, couplePhoto, onClose }: {
 const AchievementsScreen = ({ onClose }: { onClose: () => void }) => {
   const { achievements } = GIFT_DATA;
   const progressPercent = Math.round((achievements.completed / achievements.total) * 100);
+  const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
 
   return (
     <motion.div
