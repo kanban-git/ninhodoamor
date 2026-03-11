@@ -245,6 +245,13 @@ const MusicSection = ({ onColorChange }: { onColorChange?: (rgb: [number, number
     }
   };
 
+  // Extract dominant color when photo changes
+  useEffect(() => {
+    if (onColorChange) {
+      getDominantColor(DEMO_PHOTOS[photoIdx]).then(onColorChange);
+    }
+  }, [photoIdx, onColorChange]);
+
   const skipPhoto = (dir: 1 | -1) => {
     setPhotoIdx((prev) => (prev + dir + DEMO_PHOTOS.length) % DEMO_PHOTOS.length);
   };
