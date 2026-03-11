@@ -337,7 +337,8 @@ const GallerySection = () => {
   const [selected, setSelected] = useState<number | null>(null);
 
   return (
-    <motion.section {...fadeIn} className="px-4 space-y-3">
+    <motion.section {...fadeIn} className="px-4">
+      <div className="bg-gift-card rounded-2xl border border-gift-border p-4 space-y-3">
       <h3 className="text-gift-foreground font-bold text-base">
         Conheça {GIFT_DATA.senderName} e {GIFT_DATA.receiverName}
       </h3>
@@ -347,7 +348,7 @@ const GallerySection = () => {
             key={i}
             whileTap={{ scale: 0.95 }}
             onClick={() => setSelected(i)}
-            className="relative rounded-xl overflow-hidden aspect-square group"
+            className="relative rounded-xl overflow-hidden aspect-[3/4] group"
           >
             <img src={item.url} alt={item.label} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
