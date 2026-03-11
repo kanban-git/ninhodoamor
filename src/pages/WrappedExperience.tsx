@@ -32,7 +32,9 @@ const COUPLE = {
 const TOTAL_DAYS = Math.floor((new Date().getTime() - COUPLE.startDate.getTime()) / 86400000);
 const TOTAL_HOURS = TOTAL_DAYS * 24;
 
-// ─── ANIMATED COUNTER ───
+// Pre-generated stars for moon slide (no hooks needed)
+const MOON_STARS = Array.from({ length: 40 }, () => ({ x: Math.random() * 100, y: Math.random() * 100, size: Math.random() * 2 + 0.5, delay: Math.random() * 3 }));
+
 const AnimatedCounter = ({ target, duration = 2000 }: { target: number; duration?: number }) => {
   const [count, setCount] = useState(0);
   useEffect(() => {
@@ -522,23 +524,18 @@ const WrappedExperience = () => {
     },
 
     // ───── TELA 3: LUA ─────
-    () => {
-      const bgStars = useRef(
-        Array.from({ length: 40 }, () => ({ x: Math.random() * 100, y: Math.random() * 100, size: Math.random() * 2 + 0.5, delay: Math.random() * 3 }))
-      );
-      return (
-        <div className="relative h-full flex flex-col items-center justify-center bg-gradient-to-b from-indigo-950 via-slate-900 to-black overflow-hidden">
-          {bgStars.current.map((s, i) => (
-            <motion.div key={i} className="absolute rounded-full bg-white" style={{ left: `${s.x}%`, top: `${s.y}%`, width: s.size, height: s.size }} animate={{ opacity: [0.2, 1, 0.2] }} transition={{ duration: 2 + s.delay, repeat: Infinity }} />
-          ))}
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }} className="z-10 flex flex-col items-center gap-6 px-8">
-            <motion.div className="w-36 h-36 rounded-full bg-gradient-to-br from-yellow-100 to-yellow-300" animate={{ boxShadow: ["0 0 40px 10px rgba(253,224,71,0.2)", "0 0 80px 30px rgba(253,224,71,0.4)", "0 0 40px 10px rgba(253,224,71,0.2)"] }} transition={{ duration: 3, repeat: Infinity }} />
-            <p className="text-white/80 text-xl text-center font-medium">Nos conhecemos sob o brilho da lua</p>
-            <motion.p initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ delay: 0.8, type: "spring" }} className="text-yellow-300 text-3xl font-black">Cheia</motion.p>
-          </motion.div>
-        </div>
-      );
-    },
+    () => (
+      <div className="relative h-full flex flex-col items-center justify-center bg-gradient-to-b from-indigo-950 via-slate-900 to-black overflow-hidden">
+        {MOON_STARS.map((s, i) => (
+          <motion.div key={i} className="absolute rounded-full bg-white" style={{ left: `${s.x}%`, top: `${s.y}%`, width: s.size, height: s.size }} animate={{ opacity: [0.2, 1, 0.2] }} transition={{ duration: 2 + s.delay, repeat: Infinity }} />
+        ))}
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }} className="z-10 flex flex-col items-center gap-6 px-8">
+          <motion.div className="w-36 h-36 rounded-full bg-gradient-to-br from-yellow-100 to-yellow-300" animate={{ boxShadow: ["0 0 40px 10px rgba(253,224,71,0.2)", "0 0 80px 30px rgba(253,224,71,0.4)", "0 0 40px 10px rgba(253,224,71,0.2)"] }} transition={{ duration: 3, repeat: Infinity }} />
+          <p className="text-white/80 text-xl text-center font-medium">Nos conhecemos sob o brilho da lua</p>
+          <motion.p initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ delay: 0.8, type: "spring" }} className="text-yellow-300 text-3xl font-black">Cheia</motion.p>
+        </motion.div>
+      </div>
+    ),
 
     // ───── TELA 4: ESTAÇÃO (INVERNO) ─────
     () => (
