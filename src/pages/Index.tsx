@@ -70,7 +70,7 @@ const Hero = () => (
           <p className="text-lg text-muted-foreground max-w-lg leading-relaxed">
             Crie um presente digital com fotos, música e uma retrospectiva da história do seu relacionamento.
           </p>
-          <Button className="bg-green-cta hover:bg-green-cta/90 text-green-cta-foreground text-base px-8 py-6 rounded-full shadow-lg hover:shadow-xl transition-all">
+          <Button onClick={() => window.location.href = '/criar'} className="bg-green-cta hover:bg-green-cta/90 text-green-cta-foreground text-base px-8 py-6 rounded-full shadow-lg hover:shadow-xl transition-all">
             Criar meu presente →
           </Button>
           <div className="flex items-center gap-3 pt-2">
@@ -232,7 +232,7 @@ const ProductDemo = () => (
           <p className="text-muted-foreground text-lg leading-relaxed">
             Reviva cada momento do relacionamento em uma retrospectiva emocionante.
           </p>
-          <Button className="bg-green-cta hover:bg-green-cta/90 text-green-cta-foreground rounded-full px-8 py-5">
+          <Button onClick={() => window.location.href = '/criar'} className="bg-green-cta hover:bg-green-cta/90 text-green-cta-foreground rounded-full px-8 py-5">
             Criar meu presente →
           </Button>
         </motion.div>
@@ -384,7 +384,7 @@ const Pricing = () => (
                   </li>
                 ))}
               </ul>
-              <Button variant="outline" className="w-full rounded-full border-primary text-primary hover:bg-primary hover:text-primary-foreground">
+              <Button onClick={() => window.location.href = '/criar'} variant="outline" className="w-full rounded-full border-primary text-primary hover:bg-primary hover:text-primary-foreground">
                 Criar meu presente
               </Button>
             </CardContent>
@@ -410,7 +410,7 @@ const Pricing = () => (
                   </li>
                 ))}
               </ul>
-              <Button className="w-full bg-green-cta hover:bg-green-cta/90 text-green-cta-foreground rounded-full">
+              <Button onClick={() => window.location.href = '/criar'} className="w-full bg-green-cta hover:bg-green-cta/90 text-green-cta-foreground rounded-full">
                 Criar meu presente
               </Button>
             </CardContent>
