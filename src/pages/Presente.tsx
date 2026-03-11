@@ -173,8 +173,32 @@ const DEMO_PHOTOS = [
 // Free demo rock track (royalty-free)
 const DEMO_AUDIO_URL = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3";
 
+// ─── Extract dominant color from image ───
+function getDominantColor(src: string): Promise<[number, number, number]> {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+    img.onload = () => {
+      const canvas = document.createElement("canvas");
+      canvas.width = 8;
+      canvas.height = 8;
+      const ctx = canvas.getContext("2d");
+      if (!ctx) return resolve([56, 100, 140]);
+      ctx.drawImage(img, 0, 0, 8, 8);
+      const data = ctx.getImageData(0, 0, 8, 8).data;
+      let r = 0, g = 0, b = 0, count = 0;
+      for (let i = 0; i < data.length; i += 4) {
+        r += data[i]; g += data[i + 1]; b += data[i + 2]; count++;
+      }
+      resolve([Math.round(r / count), Math.round(g / count), Math.round(b / count)]);
+    };
+    img.onerror = () => resolve([56, 100, 140]);
+    img.src = src;
+  });
+}
+
 // ─── MUSIC SECTION (Full Spotify player) ───
-const MusicSection = () => {
+const MusicSection = ({ onColorChange }: { onColorChange?: (rgb: [number, number, number]) => void }) => {
   const [playing, setPlaying] = useState(false);
   const [photoIdx, setPhotoIdx] = useState(0);
   const [progress, setProgress] = useState(0);
@@ -220,6 +244,13 @@ const MusicSection = () => {
       setPlaying(true);
     }
   };
+
+  // Extract dominant color when photo changes
+  useEffect(() => {
+    if (onColorChange) {
+      getDominantColor(DEMO_PHOTOS[photoIdx]).then(onColorChange);
+    }
+  }, [photoIdx, onColorChange]);
 
   const skipPhoto = (dir: 1 | -1) => {
     setPhotoIdx((prev) => (prev + dir + DEMO_PHOTOS.length) % DEMO_PHOTOS.length);
@@ -754,6 +785,7 @@ const RetrospectiveSection = () => (
 const Presente = () => {
   const [entered, setEntered] = useState(false);
   const [showAchievements, setShowAchievements] = useState(false);
+  const [bgColor, setBgColor] = useState<[number, number, number]>([56, 100, 140]);
 
   return (
     <div className="min-h-screen bg-gift-bg text-gift-foreground">
@@ -772,12 +804,16 @@ const Presente = () => {
           transition={{ delay: 0.3, duration: 0.5 }}
           className="max-w-md mx-auto pb-20"
         >
-          {/* Blue gradient background behind header + player */}
+          {/* Dynamic gradient background */}
           <div className="relative">
-            <div className="absolute inset-0 bg-gradient-to-b from-sky-700/80 via-sky-900/40 to-transparent h-[650px] pointer-events-none" />
+            <div
+              className="absolute inset-0 h-[650px] pointer-events-none transition-colors duration-1000"
+              style={{
+                background: `linear-gradient(to bottom, rgba(${bgColor[0]}, ${bgColor[1]}, ${bgColor[2]}, 0.8), rgba(${bgColor[0]}, ${bgColor[1]}, ${bgColor[2]}, 0.3) 50%, transparent)`,
+              }}
+            />
 
             <div className="relative z-10">
-              {/* Inline top bar */}
               <div className="flex items-center justify-between h-12 px-4">
                 <button className="text-gift-foreground/70">
                   <ChevronDown className="w-6 h-6" />
@@ -791,7 +827,7 @@ const Presente = () => {
           </div>
 
           <div className="space-y-8 relative z-10">
-            <MusicSection />
+            <MusicSection onColorChange={setBgColor} />
             <CoupleSection />
             <MessageSection />
             <GallerySection />
