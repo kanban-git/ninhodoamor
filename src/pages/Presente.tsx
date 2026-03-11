@@ -337,7 +337,8 @@ const GallerySection = () => {
   const [selected, setSelected] = useState<number | null>(null);
 
   return (
-    <motion.section {...fadeIn} className="px-4 space-y-3">
+    <motion.section {...fadeIn} className="px-4">
+      <div className="bg-gift-card rounded-2xl border border-gift-border p-4 space-y-3">
       <h3 className="text-gift-foreground font-bold text-base">
         Conheça {GIFT_DATA.senderName} e {GIFT_DATA.receiverName}
       </h3>
@@ -347,7 +348,7 @@ const GallerySection = () => {
             key={i}
             whileTap={{ scale: 0.95 }}
             onClick={() => setSelected(i)}
-            className="relative rounded-xl overflow-hidden aspect-square group"
+            className="relative rounded-xl overflow-hidden aspect-[3/4] group"
           >
             <img src={item.url} alt={item.label} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
@@ -356,6 +357,7 @@ const GallerySection = () => {
             </span>
           </motion.button>
         ))}
+      </div>
       </div>
 
       <AnimatePresence>
@@ -397,17 +399,16 @@ const AchievementsSummary = ({ onOpen }: { onOpen: () => void }) => {
         onClick={onOpen}
         className="w-full text-left"
       >
-        <div className="space-y-3">
+        <div className="bg-gift-card rounded-2xl border border-gift-border p-4 space-y-3">
           <div className="flex items-center justify-between">
             <h3 className="text-gift-foreground font-bold text-base">Conquistas</h3>
             <span className="text-gift-accent text-sm font-bold">{achievements.completed}/{achievements.total}</span>
           </div>
-          {/* Horizontal badges row */}
           <div className="flex gap-3 overflow-x-auto pb-1 scrollbar-hide">
             {achievements.unlocked.slice(0, 4).map((a, i) => (
               <div
                 key={i}
-                className={`flex-shrink-0 w-16 h-16 rounded-xl border-2 ${a.color} bg-gift-card flex items-center justify-center text-2xl`}
+                className={`flex-shrink-0 w-20 h-20 rounded-2xl border-2 ${a.color} bg-gift-bg flex items-center justify-center text-2xl`}
               >
                 {a.icon}
               </div>
