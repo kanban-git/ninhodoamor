@@ -785,6 +785,7 @@ const RetrospectiveSection = () => (
 const Presente = () => {
   const [entered, setEntered] = useState(false);
   const [showAchievements, setShowAchievements] = useState(false);
+  const [bgColor, setBgColor] = useState<[number, number, number]>([56, 100, 140]);
 
   return (
     <div className="min-h-screen bg-gift-bg text-gift-foreground">
@@ -803,12 +804,16 @@ const Presente = () => {
           transition={{ delay: 0.3, duration: 0.5 }}
           className="max-w-md mx-auto pb-20"
         >
-          {/* Blue gradient background behind header + player */}
+          {/* Dynamic gradient background */}
           <div className="relative">
-            <div className="absolute inset-0 bg-gradient-to-b from-sky-700/80 via-sky-900/40 to-transparent h-[650px] pointer-events-none" />
+            <div
+              className="absolute inset-0 h-[650px] pointer-events-none transition-colors duration-1000"
+              style={{
+                background: `linear-gradient(to bottom, rgba(${bgColor[0]}, ${bgColor[1]}, ${bgColor[2]}, 0.8), rgba(${bgColor[0]}, ${bgColor[1]}, ${bgColor[2]}, 0.3) 50%, transparent)`,
+              }}
+            />
 
             <div className="relative z-10">
-              {/* Inline top bar */}
               <div className="flex items-center justify-between h-12 px-4">
                 <button className="text-gift-foreground/70">
                   <ChevronDown className="w-6 h-6" />
@@ -822,7 +827,7 @@ const Presente = () => {
           </div>
 
           <div className="space-y-8 relative z-10">
-            <MusicSection />
+            <MusicSection onColorChange={setBgColor} />
             <CoupleSection />
             <MessageSection />
             <GallerySection />
