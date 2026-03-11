@@ -84,6 +84,15 @@
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
+
+  /* Gift experience page tokens */
+  :root {
+    --gift-bg: 270 15% 10%;
+    --gift-foreground: 270 10% 92%;
+    --gift-card: 270 15% 15%;
+    --gift-border: 270 12% 22%;
+    --gift-muted: 270 10% 55%;
+  }
 }
 
 @layer base {
