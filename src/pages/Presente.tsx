@@ -756,38 +756,44 @@ const AchievementsScreen = ({ onClose }: { onClose: () => void }) => {
     </motion.div>
   );
 };
-const RetrospectiveSection = () => (
-  <motion.section {...fadeIn} className="px-4">
-    <div className="relative rounded-2xl overflow-hidden bg-gift-bg border border-gift-border min-h-[400px] flex flex-col">
-      {/* Top ribbon shapes — corners only */}
-      <div className="absolute top-[-8px] left-[-8px] w-32 h-16 bg-gradient-to-r from-pink-600 via-rose-500 to-red-600 rounded-full blur-md opacity-70 rotate-[-20deg]" />
-      <div className="absolute top-[-4px] right-[-12px] w-40 h-12 bg-gradient-to-l from-pink-500 via-red-500 to-rose-600 rounded-full blur-md opacity-60 rotate-[15deg]" />
+const RetrospectiveSection = () => {
+  const navigate = useNavigate();
+  return (
+    <motion.section {...fadeIn} className="px-4">
+      <div className="relative rounded-2xl overflow-hidden bg-gift-bg border border-gift-border min-h-[400px] flex flex-col">
+        {/* Top ribbon shapes — corners only */}
+        <div className="absolute top-[-8px] left-[-8px] w-32 h-16 bg-gradient-to-r from-pink-600 via-rose-500 to-red-600 rounded-full blur-md opacity-70 rotate-[-20deg]" />
+        <div className="absolute top-[-4px] right-[-12px] w-40 h-12 bg-gradient-to-l from-pink-500 via-red-500 to-rose-600 rounded-full blur-md opacity-60 rotate-[15deg]" />
 
-      {/* Bottom ribbon shapes — lower half only */}
-      <div className="absolute bottom-16 left-[-15%] w-52 h-16 bg-gradient-to-r from-rose-600 via-pink-500 to-red-500 rounded-full blur-md opacity-75 rotate-[8deg]" />
-      <div className="absolute bottom-8 right-[-8%] w-48 h-14 bg-gradient-to-l from-pink-600 via-rose-500 to-red-600 rounded-full blur-md opacity-70 rotate-[-12deg]" />
-      <div className="absolute bottom-[-4px] left-[10%] w-36 h-12 bg-gradient-to-r from-red-500 to-pink-500 rounded-full blur-md opacity-65 rotate-[20deg]" />
-      <div className="absolute bottom-[-8px] right-[10%] w-28 h-10 bg-gradient-to-l from-rose-500 to-red-600 rounded-full blur-md opacity-55 rotate-[-18deg]" />
+        {/* Bottom ribbon shapes — lower half only */}
+        <div className="absolute bottom-16 left-[-15%] w-52 h-16 bg-gradient-to-r from-rose-600 via-pink-500 to-red-500 rounded-full blur-md opacity-75 rotate-[8deg]" />
+        <div className="absolute bottom-8 right-[-8%] w-48 h-14 bg-gradient-to-l from-pink-600 via-rose-500 to-red-600 rounded-full blur-md opacity-70 rotate-[-12deg]" />
+        <div className="absolute bottom-[-4px] left-[10%] w-36 h-12 bg-gradient-to-r from-red-500 to-pink-500 rounded-full blur-md opacity-65 rotate-[20deg]" />
+        <div className="absolute bottom-[-8px] right-[10%] w-28 h-10 bg-gradient-to-l from-rose-500 to-red-600 rounded-full blur-md opacity-55 rotate-[-18deg]" />
 
-      {/* Content — top area, clear of shapes */}
-      <div className="relative z-10 text-center px-8 pt-10">
-        <h3 className="text-3xl font-extrabold text-gift-foreground leading-tight tracking-tight">
-          Sua Retrospectiva
-        </h3>
-        <p className="text-gift-muted text-base mt-2">
-          Explore o seu tempo de casal
-        </p>
+        {/* Content — top area, clear of shapes */}
+        <div className="relative z-10 text-center px-8 pt-10">
+          <h3 className="text-3xl font-extrabold text-gift-foreground leading-tight tracking-tight">
+            Sua Retrospectiva
+          </h3>
+          <p className="text-gift-muted text-base mt-2">
+            Explore o seu tempo de casal
+          </p>
+        </div>
+
+        {/* Button at bottom */}
+        <div className="relative z-10 mt-auto mb-10 text-center">
+          <Button
+            onClick={() => navigate("/demo/wrapped")}
+            className="bg-sky-400 hover:bg-sky-400/90 text-gift-bg rounded-full px-12 py-5 text-base font-bold shadow-lg"
+          >
+            Vamos lá
+          </Button>
+        </div>
       </div>
-
-      {/* Button at bottom */}
-      <div className="relative z-10 mt-auto mb-10 text-center">
-        <Button className="bg-sky-400 hover:bg-sky-400/90 text-gift-bg rounded-full px-12 py-5 text-base font-bold shadow-lg">
-          Vamos lá
-        </Button>
-      </div>
-    </div>
-  </motion.section>
-);
+    </motion.section>
+  );
+};
 
 // ─── MAIN PAGE ───
 const Presente = () => {
